@@ -1,0 +1,61 @@
+use store ;
+create table countries (
+code int primary key,
+name varchar (20) unique ,
+continent_name varchar (20) unique not null
+);
+create table users (
+id int primary key ,
+full_name varchar(20) ,
+email varchar(20) unique,
+gender char (1)  check (gender='m'or gender='f'),
+date_of_birth varchar(15),
+created_at datetime,
+country_code int,
+foreign key (country_code) references countries (code) 
+);
+create table orders (
+id int primary key ,
+user_id int unique,
+ststus varchar(6) check(status='start' or status='finsh'),
+created_at datetime,
+foreign key (user_id) references users(id)
+);
+create table order_products(
+oreder_id int ,
+product_id int ,
+quantity int default 0 ,
+foreign key (oreder_id ) references orders (id),
+foreign key (product_id ) references products (id)
+);
+create table products(
+id int primary key,
+name varchar(10) not null,
+price int default 0,
+status varchar (10) check (status='valid'or status='expire'),
+created_At datetime 
+);
+#DML-insert
+insert into countries values(966,'SA','saudi aribia');
+select * from countries;
+
+insert into users values(966,'asmaa','asmaa.osilam8@gmail.com','f','1998','24/07/1998','17/04/2022','966');
+select * from users ;
+
+insert into orders values(1,1,'start',22-04-17);
+select * from orders;
+
+insert into order_products values(1 ,1 ,4);
+select * from order_products;
+
+insert into products values (1,'pens',30,'valid','17/04/2022');
+select * from products;
+
+#DML-update
+update countries set name ='osilan' where code= 966;
+select * from countries;
+
+#DML-delete
+delete from products where id=1;
+select * from products;
+
